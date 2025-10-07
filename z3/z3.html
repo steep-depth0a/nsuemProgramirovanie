@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <script>
+        var timer;
+        var isFirst = true;
+        var pause = 1000;
+
+        function changeImage() {
+            const img = document.getElementById("img");
+            img.src = isFirst ? "pic2.png" : "pic1.png";
+            isFirst = !isFirst;
+        }
+
+        function start() {
+            if (!timer) {
+                timer = setInterval(changeImage, pause);
+            }
+        }
+
+        function stop() {
+            clearInterval(timer);
+            timer = null;
+        }
+
+        function setSpeed() {
+            const field = document.getElementById("speed");
+            pause = parseInt(field.value) || 1000;
+            if (timer) {
+                stop();
+                start();
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <img id="img" src="pic1.png" width="256" height="256" border="5">
+
+    <div class="controls">
+        <button onclick="start()">Start</button>
+        <button onclick="stop()">Stop</button>
+        <br><br>
+        <label>Speed:</label>
+        <input type="number" id="speed" step="100" value="1000" onchange="setSpeed()">
+    </div>
+
+</body>
+
+</html>
