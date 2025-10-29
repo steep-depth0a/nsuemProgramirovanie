@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+
+        var canvas, ctx;
+
+        var ang = 0;
+        var dx = 0, dy = 0;
+        var sides = 5;
+        var R = 100;
+
+        function init() {
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext('2d');
+            draw();
+        }
+
+        function drawPolygon(n, r) {
+            ctx.beginPath();
+            for (let i = 0; i < n; i++) {
+                let angle = (i / n) * Math.PI * 2;
+                let x = r * Math.cos(angle);
+                let y = r * Math.sin(angle);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function draw() {
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, 800, 800);
+
+            ctx.setTransform(1, 0, 0, 1, 400, 400);
+
+            ang = parseFloat(document.getElementById("ang").value);
+            dx = parseInt(document.getElementById("dx").value);
+            dy = parseInt(document.getElementById("dy").value);
+            sides = parseInt(document.getElementById("sides").value);
+            R = parseInt(document.getElementById("radius").value);
+
+            let a = Math.cos(ang);
+            let b = Math.sin(ang);
+            let c = -Math.sin(ang);
+            let d = Math.cos(ang);
+
+            ctx.setTransform(a, b, c, d, 400 + dx, 400 - dy);
+
+            drawPolygon(sides, R);
+        }
+
+    </script>
+</head>
+
+<body onload="init()">
+
+    Угол (ang): <input onchange="draw()" id="ang" value="0" type="number" step="0.1">
+    dx: <input onchange="draw()" id="dx" value="0" type="number" step="5">
+    dy: <input onchange="draw()" id="dy" value="0" type="number" step="5">
+    <br><br>
+
+    Количество углов: <input onchange="draw()" id="sides" value="5" type="number" step="1" min="3">
+    Радиус: <input onchange="draw()" id="radius" value="100" type="number" step="10">
+    <br><br>
+
+    <canvas id="canvas" width="800" height="800"></canvas>
+
+</body>
+
+</html>
