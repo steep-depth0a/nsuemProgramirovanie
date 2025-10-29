@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<body>
+
+    Радиус описанной окружности:
+    <input type="number" id="radius" value="120" min="10"><br>
+
+    Количество углов:
+    <input type="number" id="sides" value="7" min="3"><br>
+
+    Толщина линии:
+    <input type="number" id="lineWidth" value="10" min="1"><br>
+
+    Цвет линии:
+    <input type="color" id="strokeColor" value="#0000ff"><br>
+
+    Цвет заливки:
+    <input type="color" id="fillColor" value="#ffff00"><br>
+
+    <input type="checkbox" id="fill" checked> Требуется заливка<br><br>
+
+    <canvas id="canvas" width="400" height="400" style="border:1px solid #aaa;"></canvas>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const radiusInput = document.getElementById("radius");
+        const sidesInput = document.getElementById("sides");
+        const lineWidthInput = document.getElementById("lineWidth");
+        const strokeColorInput = document.getElementById("strokeColor");
+        const fillColorInput = document.getElementById("fillColor");
+        const fillCheck = document.getElementById("fill");
+
+        function draw() {
+            const radius = +radiusInput.value;
+            const sides = +sidesInput.value;
+            const lineWidth = +lineWidthInput.value;
+            const strokeColor = strokeColorInput.value;
+            const fillColor = fillColorInput.value;
+            const needFill = fillCheck.checked;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            ctx.beginPath();
+            for (let i = 0; i < sides; i++) {
+                const angle = (2 * Math.PI / sides) * i - Math.PI / 2;
+                const x = cx + radius * Math.cos(angle);
+                const y = cy + radius * Math.sin(angle);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeColor;
+            ctx.stroke();
+
+            if (needFill) {
+                ctx.fillStyle = fillColor;
+                ctx.fill();
+            }
+        }
+
+        [radiusInput, sidesInput, lineWidthInput, strokeColorInput, fillColorInput, fillCheck]
+            .forEach(element => element.addEventListener("change", draw));
+
+        draw();
+    </script>
+
+</body>
+
+</html>
