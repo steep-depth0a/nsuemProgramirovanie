@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        .europe { color: black;}
+        .asia { color: red;}
+        .america { color: green;}
+        .africa { color: blue;}
+    </style>
+    <script>
+        $(document).ready(function () {
+            function updateDisplay() {
+                let effect = $("#effect").val();
+                $("p").hide();
+                $("input[type=checkbox]:checked").each(function () {
+                    let cls = $(this).val();
+                    let items = $("." + cls);
+                    if (effect === "hide/show") {
+                        items.show();
+                    } else if (effect === "fade") {
+                        items.fadeIn();
+                    } else if (effect === "slide") {
+                        items.slideDown();
+                    }
+                });
+            }
+            $("#effect").change(updateDisplay);
+            $("input[type=checkbox]").change(updateDisplay);
+            updateDisplay();
+        });
+    </script>
+</head>
+
+<body>
+
+    <h3>Эффект появления:</h3>
+    <select id="effect">
+        <option value="hide/show">Hide/Show</option>
+        <option value="fade">Fade</option>
+        <option value="slide">Slide</option>
+    </select>
+
+    <h3>Стороны света:</h3>
+    <label><input type="checkbox" value="europe" checked> Европа</label><br>
+    <label><input type="checkbox" value="asia" checked> Азия</label><br>
+    <label><input type="checkbox" value="america" checked> Америка</label><br>
+    <label><input type="checkbox" value="africa" checked> Африка</label><br>
+
+    <p class="europe">Россия</p>
+    <p class="europe">Германия</p>
+    <p class="europe">Италия</p>
+    <p class="europe">Франция</p>
+    <p class="europe">Испания</p>
+    <p class="asia">Китай</p>
+    <p class="asia">Япония</p>
+    <p class="asia">Таиланд</p>
+    <p class="asia">Индия</p>
+    <p class="asia">Южная Корея</p>
+    <p class="america">США</p>
+    <p class="america">Бразилия</p>
+    <p class="america">Канада</p>
+    <p class="america">Мексика</p>
+    <p class="america">Аргентина</p>
+    <p class="africa">Египет</p>
+    <p class="africa">Нигерия</p>
+    <p class="africa">Марокко</p>
+    <p class="africa">Кения</p>
+    <p class="africa">ЮАР</p>
+
+</body>
+
+</html>
